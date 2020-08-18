@@ -8,9 +8,7 @@ interface Post {
   title: string;
 }
 
-export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async (
-  context
-) => {
+export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
   const client = new HttpClient();
   const res = await client.get<{ contents: Post[] }>("posts");
 
@@ -18,6 +16,7 @@ export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async (
     props: {
       posts: res.data.contents,
     },
+    revalidate: 20,
   };
 };
 
@@ -27,10 +26,17 @@ const Post: FunctionComponent<{ posts: Post[] }> = ({
   return (
     <div className="page">
       <h1>記事一覧</h1>
+      <p>
+        このページは Next.js アプリケーションのビルド時に Static Generation
+        されています。
+        <br />
+        getStaticProps の戻り値で revalidate: 20
+        を指定しているので、前回生成時から20秒経過しているかつ、コンテンツに変更があれば、ページを再描画します。
+      </p>
       <ul>
         {posts.map((p, i) => (
           <li key={i}>
-            <Link href="/posts[id]" as={`/post/${p.id}`}>
+            <Link href="/posts[id]" as={`/posts/${p.id}`}>
               <a>{p.title}</a>
             </Link>
           </li>

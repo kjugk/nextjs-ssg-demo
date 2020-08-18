@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { GetStaticProps, InferGetStaticPropsType, GetStaticPaths } from "next";
 import { HttpClient } from "../../lib/http/client";
+import Link from "next/link";
 
 interface Post {
   id: string;
@@ -13,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: res.data.contents.map((p) => ({ params: { id: p.id } })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -28,15 +29,35 @@ export const getStaticProps: GetStaticProps<{ post: Post }> = async (
     props: {
       post: res.data,
     },
+    revalidate: 20,
   };
 };
 
 const Post: FunctionComponent<{ post: Post }> = ({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  if (post === undefined) {
+    return (
+      <div className="page">
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="page">
       <h1>{post.title}</h1>
+      <p>
+        このページは Next.js アプリケーションのビルド時に Static Generation
+        されています。
+        <br />
+        getStaticPaths で fallback: true
+        を指定しているので、ビルド後に生成された記事でも、初回リクエスト時のみHTMLを生成します。
+      </p>
+
+      <Link href="/posts">
+        <a>記事一覧</a>
+      </Link>
     </div>
   );
 };
