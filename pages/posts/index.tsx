@@ -30,8 +30,8 @@ const Post: FunctionComponent<{ posts: Post[] }> = ({
         このページは Next.js アプリケーションのビルド時に Static Generation
         されています。
         <br />
-        getStaticProps の戻り値で revalidate: 5
-        を指定しているので、前回生成時から5秒経過しているかつ、コンテンツに変更があれば、ページを再描画します。
+        getStaticProps の戻り値で revalidate: 20
+        を指定しているので、前回生成時から20秒経過しているかつ、コンテンツに変更があれば、ページを再生成します。
       </p>
       <ul>
         {posts.map((p, i) => (

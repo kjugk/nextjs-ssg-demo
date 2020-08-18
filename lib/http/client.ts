@@ -5,19 +5,14 @@ export class HttpClient {
 
   constructor() {
     this.http = axios.create({
-      baseURL: "https://nextjs-demo.microcms.io/api/v1/",
+      baseURL: process.env.CMS_API_URL,
       headers: {
         "X-API-KEY": process.env.CMS_API_KEY,
       },
     });
   }
 
-  async get<T>(path: string) {
-    const res = await this.http.get<T>(path);
-
-    // For demo, add latency manually each request.
-    return new Promise<AxiosResponse<T>>((resolve) => {
-      setTimeout(() => resolve(res), 200);
-    });
+  get<T>(path: string) {
+    return this.http.get<T>(path);
   }
 }

@@ -31,14 +31,13 @@ export const getStaticProps: GetStaticProps<{ post: Post }> = async (
       props: {
         post: res.data,
       },
-      revalidate: 1,
+      revalidate: 20,
     };
   } catch (e) {
     return {
       props: {
         post: undefined,
       },
-      revalidate: 20,
     };
   }
 };
