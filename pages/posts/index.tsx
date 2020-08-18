@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
     props: {
       posts: res.data.contents,
     },
-    revalidate: 5,
+    revalidate: 20,
   };
 };
 
