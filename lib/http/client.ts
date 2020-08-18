@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter, AxiosInstance } from "axios";
+import axios, { AxiosAdapter, AxiosInstance, AxiosResponse } from "axios";
 
 export class HttpClient {
   http: AxiosInstance;
@@ -12,7 +12,12 @@ export class HttpClient {
     });
   }
 
-  get<T>(path: string) {
-    return this.http.get<T>(path);
+  async get<T>(path: string) {
+    const res = await this.http.get<T>(path);
+
+    // For demo, add latency manually each request.
+    return new Promise<AxiosResponse<T>>((resolve) => {
+      setTimeout(() => resolve(res), 200);
+    });
   }
 }

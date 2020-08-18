@@ -25,7 +25,7 @@ const Post: FunctionComponent<{ posts: Post[] }> = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <div className="page">
-      <h1>記事一覧</h1>
+      <h1>記事一覧(Static Generation)</h1>
       <p>
         このページは Next.js アプリケーションのビルド時に Static Generation
         されています。

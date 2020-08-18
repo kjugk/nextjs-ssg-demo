@@ -12,12 +12,18 @@ const Home: FunctionComponent = () => {
         依存する外部データを持たないので、次回のビルドまでこのページは再生成されません。
       </p>
 
-      <Link href="/posts">
-        <a>記事一覧(Static Rendering)</a>
-      </Link>
-      <Link href="/posts">
-        <a>記事一覧(Server-side Rendering)</a>
-      </Link>
+      <ul>
+        <li>
+          <Link href="/posts">
+            <a>記事一覧(Static Rendering)</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/ssr/posts">
+            <a>記事一覧(Server-side Rendering)</a>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };
