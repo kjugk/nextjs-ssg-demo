@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import { GetStaticProps, InferGetStaticPropsType, GetStaticPaths } from "next";
 import { HttpClient } from "../../lib/http/client";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Post {
   id: string;
@@ -23,23 +24,45 @@ export const getStaticProps: GetStaticProps<{ post: Post }> = async (
 ) => {
   const client = new HttpClient();
   const id = context.params.id as string;
-  const res = await client.get<Post>(`posts/${id}`);
 
-  return {
-    props: {
-      post: res.data,
-    },
-    revalidate: 20,
-  };
+  try {
+    const res = await client.get<Post>(`posts/${id}`);
+    return {
+      props: {
+        post: res.data,
+      },
+      revalidate: 1,
+    };
+  } catch (e) {
+    return {
+      props: {
+        post: undefined,
+      },
+      revalidate: 5,
+    };
+  }
 };
 
 const Post: FunctionComponent<{ post: Post }> = ({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  if (post === undefined) {
+  const router = useRouter();
+
+  if (router.isFallback) {
     return (
       <div className="page">
         <div>Loading...</div>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="page">
+        <h1>お探しのページは見つかりませんでした。</h1>
+        <Link href="/posts">
+          <a>記事一覧</a>
+        </Link>
       </div>
     );
   }
