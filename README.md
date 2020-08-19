@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Next.js + Vercel で、ヘッドレス CMS の記事一覧データを Static Generation で表示するデモアプリケーション。
 
 ## Getting Started
 
