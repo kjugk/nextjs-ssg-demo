@@ -7,10 +7,12 @@ import { useRouter } from "next/router";
 interface Post {
   id: string;
   title: string;
+  body: string;
 }
 
+const client = new HttpClient();
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = new HttpClient();
   const res = await client.get<{ contents: Post[] }>("posts");
 
   return {
@@ -22,7 +24,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<{ post: Post }> = async (
   context
 ) => {
-  const client = new HttpClient();
   const id = context.params.id as string;
 
   try {
@@ -74,8 +75,10 @@ const Post: FunctionComponent<{ post: Post }> = ({
         されています。
         <br />
         getStaticPaths で fallback: true
-        を指定しているので、ビルド後に生成された記事でも、初回リクエスト時のみHTMLを生成します。
+        を指定しているので、ビルド後に生成された記事でも、初回リクエスト時にHTMLを生成します。
       </p>
+
+      <p>{post.body}</p>
 
       <Link href="/posts">
         <a>記事一覧</a>

@@ -31,7 +31,7 @@ const Post: FunctionComponent<{ posts: Post[] }> = ({
         されています。
         <br />
         getStaticProps の戻り値で revalidate: 20
-        を指定しているので、前回生成時から20秒経過しているかつ、コンテンツに変更があれば、ページを再生成します。
+        を指定しているので、キャッシュされてから20秒経過しているかつ、コンテンツに変更があれば、ページを再生成します。
       </p>
       <ul>
         {posts.map((p, i) => (
@@ -42,6 +42,14 @@ const Post: FunctionComponent<{ posts: Post[] }> = ({
           </li>
         ))}
       </ul>
+
+      <a
+        href="https://github.com/kjugk/nextjs-ssg-demo"
+        target="_blank"
+        rel="noopener"
+      >
+        source code
+      </a>
     </div>
   );
 };
