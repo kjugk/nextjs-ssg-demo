@@ -1,3 +1,5 @@
+## nextjs-ssg-demo
+
 Next.js + Vercel で、ヘッドレス CMS の記事一覧データを Static Generation で表示するデモアプリケーション。
 
 ## Getting Started
